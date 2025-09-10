@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Navratri Celebration</title>
+<style>
+  /* Reset + core layout */
+  :root{
+    --bg-start:#0b0220;
+    --bg-end:#120433;
+    --accent-magenta:#ff00d4;
+    --accent-cyan:#00e6ff;
+    --accent-gold:#ffd15c;
+    --glass: rgba(255,255,255,0.04);
+    --neon-shadow: 0 0 16px rgba(255,0,255,0.12), 0 0 32px rgba(0,230,255,0.06);
+    --max-width:1200px;
+  }
+  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;background:linear-gradient(135deg,var(--bg-start),var(--bg-end));color:#eee;overflow:hidden;}
+  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;backdrop-filter: blur(0.2px);}
+
+/* LANDING SCREEN */
+  .landing{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:22px;z-index:40;
+    background:linear-gradient(120deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2));
+  }
+  .landing .wrap{width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:28px;box-sizing:border-box;}
+  .rainbow-text{
+    font-weight:700;
+    font-size:clamp(18px,5vw,40px);
+    text-align:center;
+    letter-spacing:0.6px;
+    padding:12px 20px;
+    border-radius:12px;
+    color:#fff;
+    z-index:2;
+    /* shifting neon gradient text */
+    background:linear-gradient(90deg,#ff0080,#00ffe0,#ffd700,#ff0080);
+    background-size:300% 300%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    animation:rainbowShift 6s linear infinite, landingZoom 8s ease-in-out infinite;
+  }
+  @keyframes rainbowShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  @keyframes landingZoom{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+
+  .reveal-btn{
+    cursor:pointer;
+    user-select:none;
+    padding:14px 28px;
+    border-radius:999px;
+    font-weight:700;
+    letter-spacing:0.6px;
+    box-shadow: 0 0 30px rgba(255,0,200,0.12);
+    border:1px solid rgba(255,255,255,0.06);
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color:#fff;
+    position:relative;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .reveal-btn::after{
+    content:"Click to Reveal";
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;
+    text-shadow:0 0 12px rgba(255,0,200,0.7);
+    pointer-events:none;
+  }
+  .reveal-btn:active{transform:translateY(2px) scale(.995)}
+  .reveal-btn.glow{box-shadow:0 0 24px rgba(0,230,255,0.18),0 0 48px rgba(255,0,200,0.12);}
+
+/* MAIN CELEBRATION LAYOUT - fixed single view */
+  .celebration{
+    position:relative;inset:0;z-index:10;width:100%;height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;
+    overflow:hidden;
+  }
+  .card{
+    width:100%;max-width:var(--max-width);height:calc(100vh - 40px);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;padding:22px;border-radius:18px;box-sizing:border-box;
+    position:relative;
+  }
+
+/* Top area with gif and heading */
+  .title{
+    margin-top:6px;text-align:center;width:100%;
+    z-index:8;display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .happy-text{
+    font-weight:800;
+    font-size:clamp(22px,4.2vw,56px);
+    line-height:1;
+    padding:8px 18px;border-radius:999px;
+    backdrop-filter: blur(6px);
+    position:relative;
+    color:#fff;
+    animation:discoLight 3.4s linear infinite, blinkBright 2.6s infinite;
+  }
+  /* dual-color animated glow behind heading */
+  .happy-text::before{
+    content:"";
+    position:absolute;inset:-6px;
+    background:linear-gradient(90deg,var(--accent-magenta), var(--accent-cyan));
+    filter:blur(28px);
+    z-index:-1;
+    opacity:0.85;
+    transform:skewX(-6deg);
+    border-radius:14px;
+    background-size:200% 200%;
+    animation:glowShift 4.5s ease-in-out infinite;
+  }
+  @keyframes glowShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  @keyframes discoLight{0%{text-shadow:0 0 8px rgba(255,0,200,0.9)}25%{text-shadow:0 0 12px rgba(0,230,255,0.9)}50%{text-shadow:0 0 18px rgba(255,210,90,0.9)}75%{text-shadow:0 0 12px rgba(0,230,255,0.9)}100%{text-shadow:0 0 8px rgba(255,0,200,0.9)}}
+  @keyframes blinkBright{0%,50%,100%{opacity:1}25%,75%{opacity:0.92}}
+
+  .gif-wrap{width:100%;display:flex;align-items:center;justify-content:center;padding:8px;box-sizing:border-box;z-index:6;}
+  .navratri-gif{
+    width:clamp(260px,45vw,820px);
+    max-height:60vh;
+    object-fit:contain;border-radius:18px;box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 44px rgba(128,0,255,0.08) inset;
+    transition:transform .8s ease, box-shadow .8s ease;
+    animation:gifPulse 6s ease-in-out infinite;
+    border: 1px solid rgba(255,255,255,0.03);
+    z-index:7;
+  }
+  @keyframes gifPulse{0%{transform:scale(1);filter:drop-shadow(0 20px 30px rgba(128,0,255,0.08))}50%{transform:scale(1.03);filter:drop-shadow(0 30px 42px rgba(0,220,255,0.08))}100%{transform:scale(1)}}
+
+/* Greeting message area */
+  .greeting{
+    display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 18px;border-radius:14px;margin-top:6px;
+    z-index:8;backdrop-filter: blur(6px);
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    box-shadow: var(--neon-shadow);
+  }
+  .greeting .message{
+    font-weight:700;font-size:clamp(16px,3vw,28px);text-align:center;
+    color:#fff;
+    padding:6px 12px;border-radius:8px;position:relative;
+    display:inline-block;
+  }
+  .greeting .name{
+    display:inline-block;font-weight:900;padding:2px 8px;border-radius:8px;
+    background:linear-gradient(90deg,var(--accent-cyan),var(--accent-magenta));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:nameGlow 3s ease-in-out infinite, nameBlink 2.8s infinite;
+    transform-origin:center;
+  }
+  @keyframes nameGlow{0%{filter:drop-shadow(0 0 8px rgba(0,230,255,0.2))}50%{filter:drop-shadow(0 0 18px rgba(255,0,200,0.25))}100%{filter:drop-shadow(0 0 8px rgba(0,230,255,0.2))}}
+  @keyframes nameBlink{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+
+/* Controls area */
+  .controls{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap;z-index:9;justify-content:center;width:100%;}
+  .input{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.06);
+    color:#fff;padding:10px 12px;border-radius:12px;outline:none;min-width:160px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.5);
+    transition:box-shadow .18s ease;
+  }
+  .input:focus{box-shadow:0 8px 28px rgba(0,0,0,0.6);}
+
+  .gift-button{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:800;
+    border:1px solid rgba(255,255,255,0.06);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color:#fff;box-shadow: 0 6px 22px rgba(255,200,0,0.06);
+    transform-origin:center;
+    animation:giftPulse 3s ease-in-out infinite;
+  }
+  @keyframes giftPulse{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+  .whatsapp{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:800;
+    border:1px solid rgba(255,255,255,0.04);background:#075e54;color:#fff;
+    box-shadow:0 8px 30px rgba(7,94,84,0.24);
+  }
+  .whatsapp:hover{transform:translateY(-4px);box-shadow:0 18px 48px rgba(7,94,84,0.32)}
+
+  /* Floating canvas for fireworks/confetti */
+  canvas#fx{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;}
+
+  /* Flower & balloon containers */
+  .falling-layer{position:absolute;inset:0;z-index:12;pointer-events:none;overflow:hidden;}
+  .balloon-layer{position:absolute;inset:0;z-index:11;pointer-events:none;overflow:hidden;}
+
+  /* small responsive tweaks */
+  @media (max-width:520px){
+    .happy-text{font-size:20px;padding:6px 10px}
+    .greeting .message{font-size:16px}
+    .navratri-gif{max-height:48vh}
+    .controls{flex-direction:column;gap:8px}
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- Landing Screen (full viewport) -->
+  <div id="landing" class="landing" aria-hidden="false">
+    <div class="wrap">
+      <div class="rainbow-text">Special Navratri message waiting for you</div>
+      <div style="height:12px"></div>
+      <button id="revealBtn" class="reveal-btn" title="Reveal Celebration"></button>
+    </div>
+  </div>
+
+  <!-- Main Celebration container (hidden until reveal) -->
+  <main id="celebration" class="celebration" aria-hidden="true" style="opacity:0;pointer-events:none;">
+    <div class="card" role="main" aria-live="polite">
+      <div class="title">
+        <div id="happy" class="happy-text">Happy Navratri</div>
+        <div class="gif-wrap">
+          <img id="navGif" class="navratri-gif" src="Navratri.gif" alt="Navratri" />
+        </div>
+        <div class="greeting">
+          <div class="message">
+            <span id="nameEl" class="name">Someone</span>
+            <span id="sep"> ki taraf se: </span>
+            <span id="msgEl">aapko Navratri ki bahut bahut badhai</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls" role="region" aria-label="Controls">
+        <input id="nameInput" class="input" placeholder="Enter your name" />
+        <textarea id="msgInput" class="input" rows="2" placeholder="Type your message" style="min-width:220px;max-width:420px;resize:none"></textarea>
+
+        <!-- 🔥🔥 PASTE YOUR AMAZON AFFILIATE LINK BELOW 🔥🔥 -->
+        <!-- 🔥🔥 PASTE YOUR AMAZON AFFILIATE LINK BELOW 🔥🔥 -->
+        <a href="https://amzn.to/4n1XTdm" target="_blank" class="gift-button" id="giftBtn" title="Special Navratri Gifts">
+          🎁 Special Navratri Gifts 🎁 👇
+        </a>
+
+        <a id="waShare" class="whatsapp" href="#" target="_blank" rel="noopener noreferrer" title="Share via WhatsApp">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25));">
+            <path d="M20.52 3.48A11.9 11.9 0 0 0 12 0C5.37 0 .03 5.34.03 12a11.9 11.9 0 0 0 3.48 8.52L0 24l3.48-3.48A11.9 11.9 0 0 0 12 24c6.63 0 11.97-5.34 11.97-12 0-3.2-1.24-6.18-3.45-8.52z" fill="#fff" opacity="0.06"/>
+            <path d="M17.47 14.9c-.28-.14-1.66-.82-1.92-.92-.26-.1-.45-.14-.64.14-.18.28-.72.92-.88 1.11-.16.18-.32.21-.6.07-.28-.14-1.18-.44-2.24-1.38-.83-.74-1.39-1.65-1.55-1.93-.16-.28-.02-.43.12-.57.12-.12.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.34-.02-.48-.07-.14-.64-1.54-.88-2.12-.23-.56-.47-.48-.64-.48-.16-.01-.35-.01-.54-.01-.18 0-.48.07-.73.34-.26.27-.98.96-.98 2.34 0 1.39 1.01 2.74 1.15 2.93.14.18 1.98 3.12 4.8 4.36 1.68.73 2.45.79 3.32.66.51-.08 1.66-.68 1.9-1.34.24-.66.24-1.23.17-1.35-.08-.12-.28-.18-.56-.32z" fill="#fff"/>
+          </svg>
+          Share
+        </a>
+      </div>
+
+      <!-- Canvas for music-reactive fireworks/confetti -->
+      <canvas id="fx"></canvas>
+
+      <!-- Falling flowers and balloons layers -->
+      <div id="flowers" class="falling-layer"></div>
+      <div id="balloons" class="balloon-layer"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Audio element (local file) -->
+<audio id="bgAudio" src="Navratri.mp3" preload="auto" loop crossorigin="anonymous"></audio>
+
+<script>
+/* NAVRATRI CELEBRATION - Single File Implementation
+   - Landing reveal triggers music and celebration
+   - Music-reactive fireworks/confetti via WebAudio Analyser
+   - Flower emoji falling and neon balloons
+   - Name & message via URL params or inputs; WhatsApp share link
+   - All in a fixed full-screen view (no scrolling)
+*/
+
+/* UTILS for URL params */
+function getUrlParams() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    name: params.get('name') || '',
+    msg: params.get('msg') || ''
+  };
+}
+
+/* DOM references */
+const landing = document.getElementById('landing');
+const revealBtn = document.getElementById('revealBtn');
+const celebration = document.getElementById('celebration');
+const audio = document.getElementById('bgAudio');
+const nameEl = document.getElementById('nameEl');
+const msgEl = document.getElementById('msgEl');
+const nameInput = document.getElementById('nameInput');
+const msgInput = document.getElementById('msgInput');
+const waShare = document.getElementById('waShare');
+const flowersContainer = document.getElementById('flowers');
+const balloonsContainer = document.getElementById('balloons');
+const navGif = document.getElementById('navGif');
+
+/* Defaults */
+let state = {
+  name: 'Someone',
+  msg: 'aapko Navratri ki bahut bahut badhai',
+  playing: false
+};
+
+/* Initialize name/message from URL if present */
+(function initFromURL() {
+  const p = getUrlParams();
+  if (p.name) state.name = decodeURIComponent(p.name);
+  if (p.msg) state.msg = decodeURIComponent(p.msg);
+  nameEl.textContent = state.name;
+  msgEl.textContent = state.msg;
+  nameInput.value = p.name || '';
+  msgInput.value = p.msg || '';
+  updateShareLink();
+})();
+
+/* Update share (WhatsApp) link with current values */
+function updateShareLink(){
+  const n = encodeURIComponent(nameInput.value.trim() || state.name);
+  const m = encodeURIComponent(msgInput.value.trim() || state.msg);
+  // Build a link to open current page with params (or to share via WhatsApp)
+  const pageUrl = `${location.origin}${location.pathname}?name=${n}&msg=${m}`;
+  // WhatsApp "Share" using text param; using wa.me with text query
+  const waText = encodeURIComponent(`${n} ki taraf se: ${m} - ${pageUrl}`);
+  waShare.href = `https://wa.me/?text=${waText}`;
+}
+
+/* Input events update greeting and share link */
+nameInput.addEventListener('input', () => {
+  const val = nameInput.value.trim();
+  nameEl.textContent = val || state.name;
+  updateShareLink();
+});
+msgInput.addEventListener('input', () => {
+  const val = msgInput.value.trim();
+  msgEl.textContent = val || state.msg;
+  updateShareLink();
+});
+
+/* REVEAL button: start music, fade landing, show celebration */
+revealBtn.addEventListener('click', async () => {
+  // minor visual feedback
+  revealBtn.classList.add('glow');
+  // Play audio (user gesture ensures browsers allow audio)
+  try{
+    await audio.play();
+    state.playing = true;
+  }catch(e){
+    console.warn('Audio play prevented', e);
+  }
+
+  // Start audio analyser & effects
+  startAudioEffects(audio);
+
+  // Start falling items and balloons
+  startFallingFlowers();
+  startBalloons();
+
+  // Smooth transition: fade out landing, show celebration
+  landing.style.transition = 'opacity 900ms ease, transform 900ms ease';
+  celebration.style.transition = 'opacity 900ms ease';
+  landing.style.opacity = '0';
+  landing.style.transform = 'scale(1.02)';
+  setTimeout(()=>{landing.style.display='none';landing.setAttribute('aria-hidden','true');},920);
+
+  celebration.style.pointerEvents = 'auto';
+  celebration.style.opacity = '1';
+  celebration.setAttribute('aria-hidden','false');
+});
+
+/* ----- Canvas FX: fireworks/confetti music-reactive ----- */
+const canvas = document.getElementById('fx');
+const ctx = canvas.getContext('2d');
+let cw,cH,fxParticles=[];
+
+function resizeCanvas(){
+  cw = canvas.width = innerWidth;
+  cH = canvas.height = innerHeight;
+}
+resizeCanvas();
+addEventListener('resize', resizeCanvas);
+
+/* Particle helpers */
+function random(min,max){return Math.random()*(max-min)+min;}
+function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y);}
+
+/* Particle classes */
+class Spark {
+  constructor(x,y,angle,color,size,speed,life){
+    this.x=x;this.y=y;this.vx = Math.cos(angle)*speed;this.vy=Math.sin(angle)*speed;this.color=color;this.size=size;this.life=life;this.age=0;
+  }
+  update(dt){
+    this.vy += 0.06*dt; // gravity-ish
+    this.x += this.vx*dt; this.y += this.vy*dt; this.age += dt;
+    // slight air drag
+    this.vx *= 0.998; this.vy *= 0.998;
+  }
+  draw(ctx){
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = Math.max(0,1 - this.age/this.life);
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+class Confetti {
+  constructor(x,y,color,w,h,rotate,speed,life){
+    this.x=x;this.y=y;this.color=color;this.w=w;this.h=h;this.rotate=rotate;this.speed=speed;this.life=life;this.age=0;this.rotSpeed=random(-0.12,0.12);
+  }
+  update(dt){
+    this.y += this.speed*dt;
+    this.rotate += this.rotSpeed*dt;
+    this.age += dt;
+  }
+  draw(ctx){
+    ctx.save();
+    ctx.translate(this.x,this.y);
+    ctx.rotate(this.rotate);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = Math.max(0,1 - this.age/this.life);
+    ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+}
+
+/* spawn fireworks/confetti bursts at random positions */
+function spawnBurst(x,y,intensity){
+  const colors = [getComputedStyle(document.documentElement).getPropertyValue('--accent-magenta').trim() || '#ff0080',
+                  getComputedStyle(document.documentElement).getPropertyValue('--accent-cyan').trim() || '#00e6ff',
+                  getComputedStyle(document.documentElement).getPropertyValue('--accent-gold').trim() || '#ffd15c',
+                  '#ffffff'];
+  const numSparks = Math.floor(12 * intensity);
+  for(let i=0;i<numSparks;i++){
+    const angle = random(0,Math.PI*2);
+    const color = colors[Math.floor(random(0,colors.length))];
+    fxParticles.push(new Spark(x,y,angle,color,random(1,3),random(2,6)*intensity,random(40,90)));
+  }
+  // confetti pieces
+  const confettiCount = Math.floor(6 * intensity);
+  for(let k=0;k<confettiCount;k++){
+    fxParticles.push(new Confetti(x + random(-40,40), y + random(-20,20), colors[Math.floor(random(0,colors.length))], random(6,14), random(6,12), random(0,6), random(0.6,1.6)*intensity, random(60,140)));
+  }
+}
+
+/* Audio analyser setup & driving bursts per beat levels */
+let audioCtx,analyser,srcNode,dataArray;
+function startAudioEffects(audioEl){
+  if(window._audioStarted) return; window._audioStarted = true;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 2048;
+  const bufferLength = analyser.frequencyBinCount;
+  dataArray = new Uint8Array(bufferLength);
+  srcNode = audioCtx.createMediaElementSource(audioEl);
+  srcNode.connect(analyser);
+  analyser.connect(audioCtx.destination);
+
+  let lastTime=performance.now(), accum=0;
+  // animation loop
+  (function loop(t){
+    const dt = Math.min(60, t - lastTime)/16; lastTime = t;
+    analyser.getByteFrequencyData(dataArray);
+    // compute "beat" / energy in lower frequencies
+    let lowSum=0;
+    for(let i=0;i<Math.floor(dataArray.length*0.12);i++) lowSum += dataArray[i];
+    const avg = lowSum / (dataArray.length*0.12 || 1) / 255; // 0..1
+    // spawn bursts based on energy thresholds
+    accum += avg;
+    if(accum > 1.4){
+      // spawn on top near gif
+      const rect = navGif.getBoundingClientRect();
+      const x = rect.left + rect.width/2 + random(-rect.width*0.25, rect.width*0.25);
+      const y = rect.top + random(10, rect.height*0.3);
+      spawnBurst(x, y, Math.min(3, 1 + avg*6));
+      accum = 0;
+    } else if(avg > 0.09 && Math.random()<0.04+avg*0.6){
+      const rect = navGif.getBoundingClientRect();
+      spawnBurst(rect.left + rect.width*0.5 + random(-rect.width*0.3, rect.width*0.3), rect.top + random(20,rect.height*0.2), Math.max(0.8, avg*2.6));
+    }
+    // update & draw particles
+    ctx.clearRect(0,0,cw,cH);
+    for(let i=fxParticles.length-1;i>=0;i--){
+      const p = fxParticles[i];
+      p.update(dt);
+      p.draw(ctx);
+      // remove if off or old
+      const tooOld = (p.age && p.age > p.life);
+      if(tooOld || p.x < -50 || p.x > cw+50 || p.y > cH+80) fxParticles.splice(i,1);
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+}
+
+/* FALLING FLOWERS (emoji) - reduced density 25% */
+const FLOWERS = ["🌺","💐","🥀","🌹","🌸","🌼","🌻","🌟","🌈"];
+function startFallingFlowers(){
+  // Create a modest number of falling items (reduced density)
+  const count = Math.max(8, Math.floor((innerWidth/120) * 0.25 * 6));
+  for(let i=0;i<count;i++){
+    createFlower();
+  }
+  // continue spawning slowly
+  setInterval(()=>{ if(Math.random()>0.6) createFlower(); }, 900);
+}
+function createFlower(){
+  const el = document.createElement('div');
+  el.style.position='absolute';
+  el.style.zIndex='14';
+  const startX = random(innerWidth*0.15, innerWidth*0.85);
+  el.style.left = startX + 'px';
+  el.style.top = (-20 + random(-80,0)) + 'px';
+  el.style.fontSize = random(16,32) + 'px';
+  el.style.pointerEvents='none';
+  el.style.willChange='transform,opacity';
+  el.textContent = FLOWERS[Math.floor(random(0,FLOWERS.length))];
+  flowersContainer.appendChild(el);
+
+  // animate with JS for better control (sway + rotate)
+  const duration = random(4200,9200);
+  const endY = innerHeight*0.62 + random(20, innerHeight*0.22); // falls above gif area often
+  const start = performance.now();
+  const rot = random(-360,360);
+  function frame(t){
+    const p = Math.min(1,(t-start)/duration);
+    const sway = Math.sin(p*Math.PI*2*random(0.6,1.4))*40;
+    const x = startX + sway;
+    const y = -40 + p*(endY + random(20,60));
+    el.style.transform = `translate(${x - startX}px, ${y}px) rotate(${rot*p}deg)`;
+    el.style.opacity = 1 - p*0.95;
+    if(p < 1) requestAnimationFrame(frame);
+    else el.remove();
+  }
+  requestAnimationFrame(frame);
+}
+
+/* BALLOONS - neon glowing, flicker & drift */
+function startBalloons(){
+  const bCount = Math.max(6, Math.floor(innerWidth / 160));
+  for(let i=0;i<bCount;i++){
+    createBalloon();
+  }
+  setInterval(()=>{ if(Math.random()>0.5) createBalloon(); }, 2200);
+}
+function createBalloon(){
+  const size = Math.floor(random(40,120));
+  const el = document.createElement('div');
+  el.style.position='absolute';
+  el.style.zIndex='13';
+  const startX = random(40, innerWidth - 40);
+  el.style.left = startX + 'px';
+  el.style.top = (-size - 20) + 'px';
+  el.style.width = size + 'px';
+  el.style.height = Math.round(size*1.22) + 'px';
+  el.style.borderRadius = '50%';
+  el.style.pointerEvents = 'none';
+  el.style.display = 'flex';
+  el.style.alignItems = 'center';
+  el.style.justifyContent = 'center';
+  el.style.boxShadow = `0 10px 30px rgba(0,0,0,0.35), 0 0 22px rgba(255,255,255,0.02)`;
+  const neon = `linear-gradient(180deg, ${getRandomNeon()}, ${getRandomNeon(0.65)})`;
+  el.style.background = neon;
+  el.style.opacity = 0.94;
+  balloonsContainer.appendChild(el);
+
+  // create string line
+  const stick = document.createElement('div');
+  stick.style.position='absolute';
+  stick.style.left = (size/2 - 2) + 'px';
+  stick.style.top = (Math.round(size*1.22)) + 'px';
+  stick.style.width = '2px';
+  stick.style.height = Math.max(30, size*0.6) + 'px';
+  stick.style.background = 'linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.16))';
+  stick.style.opacity = 0.6;
+  el.appendChild(stick);
+
+  // flicker and drift
+  const duration = random(7000,16000);
+  const driftX = random(-120,120);
+  const start = performance.now();
+  const flickerSpeed = random(600,1400);
+  function frame(t){
+    const p = Math.min(1,(t-start)/duration);
+    const x = startX + driftX * p + Math.sin(p*Math.PI*4)*18;
+    const y = -size - 20 + p*(innerHeight + size + 80);
+    el.style.transform = `translate(${x - startX}px, ${y}px) rotate(${Math.sin(p*8)*10}deg)`;
+    // flicker
+    if(Math.floor(t/flickerSpeed)%2 === 0) el.style.opacity = 0.95;
+    else el.style.opacity = 0.6 + Math.random()*0.22;
+    if(p < 1) requestAnimationFrame(frame);
+    else el.remove();
+  }
+  requestAnimationFrame(frame);
+}
+
+/* Utility: neon color generator */
+function getRandomNeon(opacity){
+  const pool = ['#ff00d4','#00e6ff','#ffd15c','#ff5caf','#8aff6f','#7ad0ff'];
+  const c = pool[Math.floor(random(0,pool.length))];
+  if(opacity) {
+    // convert hex to rgba
+    const r = parseInt(c.substr(1,2),16);
+    const g = parseInt(c.substr(3,2),16);
+    const b = parseInt(c.substr(5,2),16);
+    return `rgba(${r},${g},${b},${opacity})`;
+  }
+  return c;
+}
+
+/* Prevent page scrolling */
+window.addEventListener('touchmove', function(e){ e.preventDefault(); }, {passive:false});
+
+/* Accessibility: keyboard reveal */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter' && landing.style.display !== 'none'){
+    revealBtn.click();
+  }
+});
+
+/* Clean up when user closes page or navigates away */
+window.addEventListener('beforeunload', () => {
+  try{ audio.pause(); } catch(e){}
+});
+
+/* Optional: gentle subtle animated background shift to match neon theme */
+(function bgShift(){
+  let t=0;
+  function frame(){
+    t += 0.002;
+    const x = Math.sin(t)*40;
+    const y = Math.cos(t)*40;
+    document.body.style.background = `radial-gradient(circle at ${50 + x}% ${50 + y}%, rgba(24,6,44,0.45), rgba(8,2,24,0.9))`;
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+/* Note: The code above uses local files Navratri.gif and Navratri.mp3.
+   - Place those files in the same folder as this HTML file.
+   - Browsers require a user gesture to play audio; clicking 'Click to Reveal' provides that.
+*/
+
+/* END OF SCRIPT */
+</script>
+</body>
+</html>
