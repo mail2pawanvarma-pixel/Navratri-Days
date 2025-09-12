@@ -6,193 +6,109 @@
 <title>Navratri Celebration</title>
 <style>
   :root{
-    --bg1:#fff0f5; /* pale pink */
-    --bg2:#fff4e6; /* cream */
-    --accent-magenta:#c71b6b;
-    --accent-cyan:#00cfd8;
-    --accent-gold:#d4a017;
+    --bg1:#fff0f5;
+    --bg2:#fff4e6;
     --accent-maroon:#7a1226;
-    --glass: rgba(255,255,255,0.06);
+    --accent-gold:#d4a017;
+    --accent-cyan:#00cfd8;
   }
+  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(180deg,var(--bg1),var(--bg2));-webkit-font-smoothing:antialiased;overflow:hidden;}
+  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;}
 
-  html,body{height:100%;margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif; background: linear-gradient(135deg,var(--bg1),var(--bg2)); overflow:hidden; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;}
+  /* --- Landing (first screen) --- */
+  #landing{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:20px;box-sizing:border-box;}
+  .landing-card{width:100%;max-width:980px;padding:26px;border-radius:16px;background:linear-gradient(180deg,rgba(255,255,255,0.95),rgba(255,250,245,0.98));box-shadow:0 12px 40px rgba(122,18,38,0.08);text-align:center;}
+  .landing-title{font-size:clamp(20px,4.8vw,44px);font-weight:800;color:var(--accent-maroon);background:linear-gradient(90deg,var(--accent-maroon),var(--accent-gold));-webkit-background-clip:text;color:transparent;}
+  .landing-sub{font-size:14px;color:#6b1020;margin-top:8px;}
+  .reveal-btn{margin-top:14px;padding:14px 28px;border-radius:999px;border:0;background:linear-gradient(90deg,var(--accent-maroon),var(--accent-gold));color:#fff;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(122,18,38,0.12);}
 
-  /* Stage */
-  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+  /* --- Celebration (hidden until reveal) --- */
+  #celebration{position:fixed;inset:0;z-index:10;opacity:0;pointer-events:none;display:flex;align-items:center;justify-content:center;padding:18px;transition:opacity .6s ease;}
+  .card{width:100%;max-width:1100px;height:calc(100vh - 36px);border-radius:16px;padding:22px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:12px;background:linear-gradient(180deg,rgba(255,250,250,0.92),rgba(255,249,242,0.98));box-shadow:0 14px 36px rgba(122,18,38,0.06);overflow:hidden;}
 
-/* --------- Landing (first) --------- */
-  #landing{
-    position:fixed; inset:0; z-index:80;
-    display:flex; align-items:center; justify-content:center; flex-direction:column;
-    background:
-      radial-gradient(circle at 15% 20%, rgba(255,224,230,0.85), transparent 12%),
-      radial-gradient(circle at 85% 80%, rgba(255,241,217,0.85), transparent 12%),
-      linear-gradient(180deg, rgba(122,18,38,0.06), rgba(255,241,217,0.04));
-    padding:28px; box-sizing:border-box;
-  }
-  .landing-card{
-    width:100%; max-width:920px; padding:26px; border-radius:18px;
-    display:flex; flex-direction:column; gap:18px; align-items:center;
-    backdrop-filter: blur(6px);
-    background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.92));
-    box-shadow: 0 12px 40px rgba(122,18,38,0.12);
-    border:1px solid rgba(122,18,38,0.06);
-  }
-  .landing-title{
-    font-size:clamp(20px,4.8vw,44px); font-weight:800; color:var(--accent-maroon);
-    text-align:center;
-    background:linear-gradient(90deg,var(--accent-maroon), var(--accent-gold), #ff7aa2);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow:0 6px 30px rgba(215,120,140,0.08);
-  }
-  .landing-sub{ font-size:clamp(14px,3.2vw,18px); color:#6b1020; opacity:0.95; text-align:center; }
+  .happy-text{font-weight:900;font-size:clamp(26px,5.5vw,64px);color:var(--accent-maroon);background:linear-gradient(90deg,var(--accent-maroon),var(--accent-gold));-webkit-background-clip:text;color:transparent;text-align:center;margin-top:6px;}
+  .gif-wrap{width:100%;display:flex;align-items:center;justify-content:center;padding:6px;box-sizing:border-box;}
+  img.navratri{width:clamp(300px,44vw,780px);max-height:60vh;object-fit:cover;border-radius:16px;border:3px solid rgba(212,160,23,0.08);box-shadow:0 24px 48px rgba(122,18,38,0.08);}
 
-  .reveal-btn{
-    margin-top:6px;
-    background:linear-gradient(90deg,var(--accent-maroon), var(--accent-gold));
-    border:none; color:white; padding:14px 28px; border-radius:999px;
-    font-weight:800; font-size:16px; cursor:pointer;
-    box-shadow: 0 8px 30px rgba(122,18,38,0.18), 0 0 40px rgba(212,160,23,0.12);
-    transition:transform .18s ease, box-shadow .18s ease, opacity .18s;
-  }
-  .reveal-btn:active{transform:translateY(2px)}
-  .reveal-desc{ font-size:13px; color:#7a1226; opacity:0.9; }
-
-  /* subtle animated gradient background inside landing card */
-  .landing-card::before{
-    content:""; position:absolute; inset:0; pointer-events:none; border-radius:18px;
-    background:linear-gradient(120deg, rgba(255,200,220,0.06), rgba(255,240,200,0.04));
-    mix-blend-mode: overlay;
-  }
-
-/* --------- Celebration (hidden until reveal) --------- */
-  #celebration{
-    position:fixed; inset:0; z-index:10; opacity:0; pointer-events:none;
-    display:flex; align-items:center; justify-content:center; padding:20px; box-sizing:border-box;
-    transition:opacity .7s ease;
-  }
-  .card{
-    width:100%; max-width:1100px; height:calc(100vh - 40px);
-    display:flex; flex-direction:column; align-items:center; gap:14px; padding:22px;
-    border-radius:18px; box-sizing:border-box;
-    background: linear-gradient(180deg, rgba(255,250,250,0.82), rgba(255,250,245,0.9));
-    box-shadow: 0 12px 36px rgba(122,18,38,0.08);
-    border:1px solid rgba(122,18,38,0.04);
-    overflow:hidden;
-  }
-
-  .title{ width:100%; display:flex; flex-direction:column; align-items:center; gap:12px; padding-top:6px; }
-  .happy-text{
-    font-weight:900; font-size:clamp(28px,5.6vw,72px); line-height:1; text-align:center;
-    background: linear-gradient(90deg, var(--accent-maroon), var(--accent-gold), #ff5a84);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    position:relative;
-    text-shadow: 0 6px 28px rgba(122,18,38,0.06);
-    animation:glowShift 4.6s ease-in-out infinite;
-  }
-  @keyframes glowShift{0%{filter:drop-shadow(0 0 8px rgba(255,200,120,0.06))}50%{filter:drop-shadow(0 0 16px rgba(255,100,140,0.08))}100%{filter:drop-shadow(0 0 8px rgba(255,200,120,0.06))}}
-
-  .gif-wrap{ width:100%; display:flex; align-items:center; justify-content:center; padding:6px; box-sizing:border-box; }
-  img.navratri{ width:clamp(300px,44vw,780px); max-height:60vh; object-fit:cover; border-radius:18px;
-    box-shadow: 0 24px 50px rgba(122,18,38,0.12);
-    border: 3px solid rgba(212,160,23,0.08);
-    animation:gifPulse 6s ease-in-out infinite; z-index:6; }
-  @keyframes gifPulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
-
-  .greeting{
-    margin-top:6px; padding:12px 18px; border-radius:12px; display:flex; align-items:center; justify-content:center;
-    background: linear-gradient(90deg, rgba(255,240,244,0.8), rgba(255,250,236,0.9)); border:1px solid rgba(122,18,38,0.04);
-    box-shadow: 0 8px 26px rgba(122,18,38,0.04);
-  }
-  .greeting .message{ font-weight:800; font-size:clamp(18px,3.2vw,28px); color:var(--accent-maroon); text-align:center; }
-  .greeting .name{
-    font-weight:900; padding:2px 8px; margin-right:6px;
-    background:linear-gradient(90deg,var(--accent-gold),var(--accent-maroon)); -webkit-background-clip:text; background-clip:text; color:transparent;
-    animation:namePulse 3s ease-in-out infinite;
-  }
-  @keyframes namePulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+  /* Greeting with no gap */
+  .greeting{margin-top:6px;padding:12px 18px;border-radius:12px;background:linear-gradient(90deg,rgba(255,240,244,0.85),rgba(255,250,236,0.95));display:inline-block;}
+  .greeting .message{font-weight:800;font-size:clamp(16px,3vw,26px);color:var(--accent-maroon);white-space:normal;line-height:1.3;}
+  .greeting .name{font-weight:900;background:linear-gradient(90deg,var(--accent-gold),var(--accent-maroon));-webkit-background-clip:text;color:transparent;padding:0;margin:0;}
+  .greeting .sep{display:inline;margin:0 4px;color:var(--accent-maroon);}
 
   /* Controls */
-  .controls{ display:flex; gap:10px; align-items:center; justify-content:center; flex-wrap:wrap; margin-top:12px; z-index:9; width:100%; }
-  .input{ min-width:200px; max-width:420px; width:calc(40vw); background:rgba(255,255,255,0.88); border:1px solid rgba(122,18,38,0.06); padding:12px 14px; border-radius:12px; font-size:1.1rem; color:var(--accent-maroon); outline:none; box-shadow:0 8px 20px rgba(0,0,0,0.05); }
-  .input::placeholder{ color: #8a2b3b; opacity:0.7; }
+  .controls{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:8px;width:100%;}
+  .input{min-width:200px;max-width:560px;width:calc(40vw);padding:12px 14px;border-radius:12px;border:1px solid rgba(122,18,38,0.06);background:#fff;color:var(--accent-maroon);font-size:1.05rem;outline:none;box-shadow:0 8px 20px rgba(0,0,0,0.04);text-align:center;}
+  .input::placeholder{color:#a34e53;opacity:0.7;}
+  .controls-row{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+  .gift-button{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;background:linear-gradient(90deg,var(--accent-maroon),var(--accent-gold));color:#fff;font-weight:800;text-decoration:none;box-shadow:0 10px 30px rgba(122,18,38,0.12);font-size:1.05rem;}
+  .gift-button.disabled{opacity:0.56;pointer-events:none;box-shadow:none;}
+  .wa-button{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:#075e54;color:#fff;font-weight:800;text-decoration:none;box-shadow:0 10px 28px rgba(7,94,84,0.18);font-size:1.05rem;}
 
-  .controls-row{ display:flex; gap:12px; align-items:center; justify-content:center; flex-wrap:wrap; width:100%; margin-top:6px; }
+  /* Mute button (top-right) */
+  .mute-btn{position:fixed;top:12px;right:12px;z-index:100;border:0;background:#fff;border-radius:999px;padding:8px;box-shadow:0 6px 18px rgba(0,0,0,0.12);cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;}
 
-  .gift-button{
-    display:inline-flex; align-items:center; gap:10px; padding:12px 18px; border-radius:999px;
-    background:linear-gradient(90deg,var(--accent-maroon),var(--accent-gold)); color:white; font-weight:800; text-decoration:none;
-    box-shadow: 0 10px 28px rgba(122,18,38,0.14);
-    font-size:1.05rem;
-  }
-  .gift-button.disabled{ opacity:0.56; pointer-events:none; box-shadow:none; }
-
-  .wa-button{
-    display:inline-flex; align-items:center; gap:8px; padding:12px 18px; border-radius:999px; background:#075e54; color:#fff; font-weight:800; text-decoration:none;
-    box-shadow:0 10px 28px rgba(7,94,84,0.18); font-size:1.05rem;
-  }
-
-  /* Floating/layers */
-  canvas#fx{ position:absolute; inset:0; width:100%; height:100%; z-index:5; pointer-events:none; }
-  .falling-layer, .balloon-layer{ position:absolute; inset:0; pointer-events:none; z-index:7; overflow:hidden; }
+  /* Canvas & falling layers */
+  canvas#fx{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;}
+  .falling-layer,.balloon-layer{position:absolute;inset:0;pointer-events:none;z-index:7;overflow:hidden;}
 
   /* Responsive tweaks */
   @media (max-width:640px){
-    .input{ width:84%; font-size:1rem; }
-    .happy-text{ font-size:clamp(20px,7vw,44px); }
-    img.navratri{ width:86%; max-height:46vh; }
-    .greeting .message{ font-size:1rem; }
+    .input{width:88%;}
+    .happy-text{font-size:28px;}
+    img.navratri{width:86%;max-height:48vh;}
+    .greeting .message{font-size:16px;}
   }
 </style>
 </head>
 <body>
 <div class="stage">
 
-  <!-- LANDING SCREEN -->
-  <div id="landing" role="dialog" aria-modal="true" aria-label="Landing: reveal celebration">
+  <!-- Landing screen -->
+  <div id="landing" role="dialog" aria-modal="true" aria-label="Landing">
     <div class="landing-card" role="group" aria-labelledby="landingTitle">
       <div id="landingTitle" class="landing-title">Special Navratri message waiting for you</div>
-      <div class="landing-sub">Click the button below to reveal the Navratri celebration.</div>
-      <button id="revealBtn" class="reveal-btn" aria-label="Click to reveal celebration">Click to Reveal</button>
-      <div class="landing-sub" style="font-size:12px;color:#7a1226;opacity:0.9;">(Music & celebration start after you click)</div>
+      <div class="landing-sub">Click below to reveal the Navratri celebration</div>
+      <button id="revealBtn" class="reveal-btn" aria-label="Click to reveal">Click to Reveal</button>
+      <div class="landing-sub" style="font-size:12px;margin-top:10px;color:#7a1226;">(Music & celebration start after you click)</div>
     </div>
   </div>
 
-  <!-- CELEBRATION SCREEN -->
+  <!-- Celebration screen -->
   <main id="celebration" aria-hidden="true">
     <div class="card" role="main">
+      <button id="muteBtn" class="mute-btn" aria-label="Mute or unmute audio" title="Mute / Unmute">
+        <!-- Speaker icon (SVG) -->
+        <svg id="muteIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M5 9v6h4l5 4V5L9 9H5z" fill="#7a1226"></path>
+        </svg>
+      </button>
 
-      <div class="title">
-        <div class="happy-text">Happy Navratri</div>
-        <div class="gif-wrap">
-          <img id="navGif" class="navratri" src="Navratri.gif" alt="Navratri image (place Navratri.gif in same folder)" />
-        </div>
+      <div class="happy-text">Happy Navratri</div>
 
-        <div class="greeting" role="status" aria-live="polite">
-          <div class="message">
-            <span id="nameEl" class="name">Someone</span>
-            <span> ki taraf se </span>
-            <span id="msgEl">aapko Navratri ki bahut bahut badhai</span>
-          </div>
+      <div class="gif-wrap">
+        <img id="navGif" class="navratri" src="Navratri.gif" alt="Navratri image (place Navratri.gif here)" onerror="this.style.display='none'">
+      </div>
+
+      <div class="greeting" role="status" aria-live="polite">
+        <div class="message">
+          <span id="nameEl" class="name">Someone</span><span class="sep"> ki taraf se: </span><span id="msgEl">aapko Navratri ki bahut bahut badhai</span>
         </div>
       </div>
 
-      <!-- Controls -->
-      <div class="controls" aria-label="Inputs and actions">
-        <input id="nameInput" class="input" placeholder="Enter your name " />
-        <input id="msgInput" class="input" placeholder="Type your message " />
+      <div class="controls" aria-label="Inputs">
+        <input id="nameInput" class="input" placeholder="Enter your name" />
+        <input id="msgInput" class="input" placeholder="Type your message" />
       </div>
 
-      <div class="controls-row" style="margin-top:6px;">
-        <!-- 🔥🔥 PASTE YOUR AFFILIATE LINK BELOW 🔥🔥
-             Replace the value of data-href with your affiliate link (or edit href below).
-             If you leave the placeholder, the button will be disabled and won't open anything. -->
-        <a id="giftBtn" class="gift-button disabled" href="#" data-href="https://amzn.to/3KgAfuZ" target="_blank" rel="noopener">🎁 Special Navratri Gifts 🎁</a>
+      <div class="controls-row" aria-label="Actions">
+        <!-- Put your affiliate link directly in href below.
+             Example: href="https://www.amazon.in/your-product?tag=yourtag-21" -->
+        <a id="giftBtn" class="gift-button" href="https://amzn.to/3KgAfuZ" target="_blank" rel="noopener">🎁 Special Navratri Gifts 🎁</a>
 
         <a id="waShare" class="wa-button" href="#" target="_blank" rel="noopener">Share</a>
       </div>
 
-      <!-- Canvas / layers -->
       <canvas id="fx"></canvas>
       <div id="flowers" class="falling-layer" aria-hidden="true"></div>
       <div id="balloons" class="balloon-layer" aria-hidden="true"></div>
@@ -201,31 +117,28 @@
 
 </div>
 
-<!-- Audio file (local) -->
+<!-- Local audio file -->
 <audio id="bgAudio" src="Navratri.mp3" preload="auto" loop crossorigin="anonymous"></audio>
 
 <script>
-/* Navratri celebration page
-   - Landing overlay shows first and is high-contrast
-   - On reveal: plays Navratri.mp3, shows celebration, starts effects
-   - Gift button opens only when you replace data-href with a real link
-   - WhatsApp share builds message with name & msg and opens wa.me
-   - Defaults: name = "Someone", msg = "aapko Navratri ki bahut bahut badhai"
+/* Full functional Navratri page
+   - Landing reveals celebration
+   - Greeting shows URL ?name & ?msg automatically (if present) but inputs keep placeholders
+   - Inputs update the greeting preview while typing
+   - Share opens WhatsApp (or navigator.share if available) and then clears inputs (placeholders remain)
+   - Gift button opens href (enable by replacing YOUR_AFFILIATE_LINK)
+   - Mute/unmute button and audio pauses when tab hidden (minimized)
+   - Confetti/flowers/balloons running (reduced density)
 */
 
-/* ----------------- Utilities ----------------- */
-const qs = sel => document.querySelector(sel);
-const qsa = sel => document.querySelectorAll(sel);
-function random(min,max){ return Math.random()*(max-min)+min; }
-function safeText(s){ return String(s||'').trim(); }
-
-/* ----------------- Elements ----------------- */
+const qs = s => document.querySelector(s);
 const landing = qs('#landing');
 const revealBtn = qs('#revealBtn');
 const celebration = qs('#celebration');
 const audioEl = qs('#bgAudio');
+const muteBtn = qs('#muteBtn');
+const muteIcon = qs('#muteIcon');
 
-const navGif = qs('#navGif');
 const nameEl = qs('#nameEl');
 const msgEl = qs('#msgEl');
 
@@ -239,216 +152,178 @@ const ctx = canvas.getContext('2d');
 const flowersLayer = qs('#flowers');
 const balloonsLayer = qs('#balloons');
 
-let cw, ch;
-function resizeCanvas(){ cw = canvas.width = innerWidth; ch = canvas.height = innerHeight; }
+let cw, ch; function resizeCanvas(){ cw = canvas.width = innerWidth; ch = canvas.height = innerHeight; }
 resizeCanvas(); window.addEventListener('resize', resizeCanvas);
 
-/* Defaults */
+/* Defaults and current greeting */
 const DEFAULT_NAME = 'Someone';
 const DEFAULT_MSG = 'aapko Navratri ki bahut bahut badhai';
 let current = { name: DEFAULT_NAME, msg: DEFAULT_MSG };
 
-/* ----------------- URL params -> initial values ----------------- */
+/* Init from URL (show greeting on page if params exist, but DO NOT replace placeholders) */
 (function initFromURL(){
   const p = new URLSearchParams(window.location.search);
-  const pName = safeText(p.get('name'));
-  const pMsg = safeText(p.get('msg'));
-  if(pName) { nameInput.value = pName; current.name = pName; }
-  if(pMsg) { msgInput.value = pMsg; current.msg = pMsg; }
-  // initial UI greeting
+  const pName = (p.get('name') || '').trim();
+  const pMsg = (p.get('msg') || '').trim();
+  if(pName) current.name = decodeURIComponent(pName);
+  if(pMsg) current.msg = decodeURIComponent(pMsg);
   nameEl.textContent = current.name;
   msgEl.textContent = current.msg;
-  updateShareLink();
+  updateWaLink();
 })();
 
-/* ----------------- Update greeting & share link ----------------- */
+/* Update greeting preview (live) but inputs always keep placeholders */
 function updateGreeting(){
-  const n = safeText(nameInput.value) || DEFAULT_NAME;
-  const m = safeText(msgInput.value) || DEFAULT_MSG;
-  current.name = n; current.msg = m;
-  nameEl.textContent = n;
-  msgEl.textContent = m;
-  updateShareLink();
+  const nTyped = (nameInput.value || '').trim();
+  const mTyped = (msgInput.value || '').trim();
+  // If user typed something, show that; otherwise fall back to current (from URL or default)
+  const showName = nTyped || current.name || DEFAULT_NAME;
+  const showMsg = mTyped || current.msg || DEFAULT_MSG;
+  nameEl.textContent = showName;
+  msgEl.textContent = showMsg;
+  updateWaLinkWith(showName, showMsg);
 }
 nameInput.addEventListener('input', updateGreeting);
 msgInput.addEventListener('input', updateGreeting);
 
-/* Build WhatsApp share link */
-function updateShareLink(){
-  const n = encodeURIComponent(current.name);
-  const m = encodeURIComponent(current.msg);
+/* Build WhatsApp share link or use Web Share API when available */
+function updateWaLink(){
+  updateWaLinkWith(current.name, current.msg);
+}
+function updateWaLinkWith(name, msg){
+  const n = encodeURIComponent(name || DEFAULT_NAME);
+  const m = encodeURIComponent(msg || DEFAULT_MSG);
   const pageUrl = `${location.origin}${location.pathname}?name=${n}&msg=${m}`;
-  const text = `${current.name} ki taraf se: ${current.msg} - ${pageUrl}`;
+  const text = `${name} ki taraf se: ${msg} - ${pageUrl}`;
   waShare.href = `https://wa.me/?text=${encodeURIComponent(text)}`;
 }
 
-/* ----------------- Gift button behavior ----------------- */
-/* If user hasn't replaced the placeholder, disable the button; else enable and open in new tab */
-(function initGiftButton(){
-  const dataHref = (giftBtn.dataset.href || '').trim();
-  if(dataHref && dataHref !== 'YOUR_AFFILIATE_LINK' && !dataHref.startsWith('#') ){
-    giftBtn.href = dataHref;
-    giftBtn.classList.remove('disabled');
-    // ensure opens in new tab (target already set)
-    giftBtn.addEventListener('click', (e)=>{
-      // default anchor behavior will open in new tab; let it proceed
-    });
-  } else {
-    // disabled: prevent any navigation and keep button visible but muted
-    giftBtn.href = 'javascript:void(0)';
+/* Enable gift button only if a real link is present in href */
+(function initGift(){
+  const href = (giftBtn.getAttribute('href')||'').trim();
+  const enabled = href && !href.includes('YOUR_AFFILIATE_LINK') && (href.startsWith('http://') || href.startsWith('https://'));
+  if(!enabled){
     giftBtn.classList.add('disabled');
-    giftBtn.addEventListener('click', (e)=>{ e.preventDefault(); /* no-op */ });
+    giftBtn.addEventListener('click', (e)=>{ e.preventDefault(); });
+  } else {
+    giftBtn.classList.remove('disabled');
   }
 })();
 
-/* ----------------- Reveal action ----------------- */
+/* Reveal button: play audio (user gesture), show celebration, start effects */
+let audioStarted = false;
 revealBtn.addEventListener('click', async ()=>{
-  // Try to play audio (user gesture)
-  try { await audioEl.play(); } catch(e){ /* ignore */ }
-
-  // Visual transition: fade out landing and show celebration
-  landing.style.transition = 'opacity 700ms ease, transform 700ms ease';
+  try{ await audioEl.play(); audioStarted = true; } catch(e){ /* autoplay blocked if no gesture - click provides it */ }
+  landing.style.transition = 'opacity .6s ease, transform .6s ease';
   landing.style.opacity = '0';
   landing.style.transform = 'scale(1.02)';
-  // show celebration
+  setTimeout(()=>{ landing.style.display='none'; landing.setAttribute('aria-hidden','true'); }, 650);
+
   celebration.style.pointerEvents = 'auto';
   celebration.style.opacity = '1';
   celebration.setAttribute('aria-hidden','false');
 
-  // after transition remove landing from DOM (so clicks won't interact)
-  setTimeout(()=>{ landing.style.display='none'; landing.setAttribute('aria-hidden','true'); }, 760);
-
-  // start effects
-  startAudioEffects(audioEl);
+  // start visuals
   startFallingFlowers();
   startBalloons();
+  startConfettiLoop();
 });
 
-/* Allow keyboard Enter to reveal as accessibility */
-document.addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter' && landing && landing.style.display !== 'none'){ revealBtn.click(); }
-});
-
-/* ----------------- Canvas fireworks/confetti ----------------- */
-let particles = [];
-class Particle {
-  constructor(x,y,vx,vy,size,color,life,shape='circle'){ Object.assign(this,{x,y,vx,vy,size,color,life,age:0,shape}); }
-  update(dt){
-    this.vy += 0.05 * dt;
-    this.x += this.vx * dt;
-    this.y += this.vy * dt;
-    this.age += dt;
+/* Mute / Unmute button */
+function setMuteUI(isMuted){
+  if(isMuted){
+    // show muted icon
+    muteIcon.innerHTML = '<path d="M11 5v14l-6-6H2V13h3l6-6z" fill="#7a1226"></path><path d="M19 8l-1.4 1.4L19 10.8 21.2 8.6 19 6.4 17.6 7.8 19 9.2z" fill="#7a1226"></path>';
+  }else{
+    // show speaker icon
+    muteIcon.innerHTML = '<path d="M5 9v6h4l5 4V5L9 9H5z" fill="#7a1226"></path>';
   }
-  draw(ctx){
-    ctx.save();
-    ctx.globalAlpha = Math.max(0,1 - (this.age/this.life));
-    if(this.shape==='rect'){
-      ctx.fillStyle = this.color;
-      ctx.fillRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
+}
+muteBtn.addEventListener('click', ()=>{
+  audioEl.muted = !audioEl.muted;
+  setMuteUI(audioEl.muted);
+});
+
+/* Pause audio when tab is hidden (minimized) and resume when visible (if it was playing and not muted) */
+let wasPlayingBeforeHidden = false;
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){
+    if(!audioEl.paused){
+      audioEl.pause();
+      wasPlayingBeforeHidden = true;
     } else {
-      ctx.fillStyle = this.color;
-      ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill();
+      wasPlayingBeforeHidden = false;
     }
-    ctx.restore();
-  }
-}
-
-/* spawn burst near gif area */
-function spawnBurst(x,y,intensity){
-  const colors = [getCSS('--accent-maroon','#7a1226'), getCSS('--accent-gold','#d4a017'), '#ffd6e1', '#fff6d0'];
-  const sparks = Math.floor(10 * intensity);
-  for(let i=0;i<sparks;i++){
-    const angle = random(0,Math.PI*2);
-    const speed = random(1,6) * (0.5 + intensity);
-    particles.push(new Particle(x,y,Math.cos(angle)*speed,Math.sin(angle)*speed, random(1,3), colors[Math.floor(random(0,colors.length))], random(50,110)));
-  }
-  const confettiCount = Math.floor(6 * intensity);
-  for(let i=0;i<confettiCount;i++){
-    particles.push(new Particle(x + random(-20,20), y + random(-10,10), random(-1.5,1.5), random(0.5,2.5), random(4,10), getCSS('--accent-gold','#d4a017'), random(80,140), 'rect'));
-  }
-}
-
-/* draw loop */
-(function renderLoop(){
-  ctx.clearRect(0,0,cw,ch);
-  for(let i=particles.length-1;i>=0;i--){
-    const p = particles[i];
-    p.update(1);
-    p.draw(ctx);
-    if(p.age > p.life || p.x < -50 || p.x > cw+50 || p.y > ch+80) particles.splice(i,1);
-  }
-  requestAnimationFrame(renderLoop);
-})();
-
-/* ----------------- Audio analyser for music-reactive bursts ----------------- */
-let audioCtx, analyser, srcNode, dataArray;
-function startAudioEffects(audioEl){
-  if(window._navAudioStarted) return; window._navAudioStarted = true;
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 2048;
-  const bufferLength = analyser.frequencyBinCount;
-  dataArray = new Uint8Array(bufferLength);
-  srcNode = audioCtx.createMediaElementSource(audioEl);
-  srcNode.connect(analyser);
-  analyser.connect(audioCtx.destination);
-
-  let last = performance.now(), energyAccumulator = 0;
-  (function loop(t){
-    const dt = Math.min(60, t - last)/16; last = t;
-    analyser.getByteFrequencyData(dataArray);
-    // compute low-frequency energy
-    let lowSum = 0;
-    const cutoff = Math.floor(dataArray.length * 0.12);
-    for(let i=0;i<cutoff;i++) lowSum += dataArray[i];
-    const avg = lowSum / (cutoff||1) / 255;
-    energyAccumulator += avg;
-    if(energyAccumulator > 1.4){
-      const rect = navGif.getBoundingClientRect();
-      const x = rect.left + rect.width*0.5 + random(-rect.width*0.25, rect.width*0.25);
-      const y = rect.top + random(10, rect.height*0.2);
-      spawnBurst(x,y, Math.min(3,1 + avg*6));
-      energyAccumulator = 0;
-    } else if(avg > 0.09 && Math.random() < 0.03 + avg*0.6){
-      const rect = navGif.getBoundingClientRect();
-      spawnBurst(rect.left + rect.width*0.5 + random(-rect.width*0.3, rect.width*0.3), rect.top + random(20,rect.height*0.18), Math.max(0.8, avg*2.4));
+  } else {
+    if(wasPlayingBeforeHidden && audioStarted && !audioEl.muted){
+      audioEl.play().catch(()=>{});
     }
-    requestAnimationFrame(loop);
-  })(performance.now());
-}
+    wasPlayingBeforeHidden = false;
+  }
+});
 
-/* helper to read computed CSS variable */
-function getCSS(varName, fallback){ try{ const v = getComputedStyle(document.documentElement).getPropertyValue(varName).trim(); return v||fallback; }catch(e){return fallback;} }
+/* Share button click behavior:
+   Prefer navigator.share on supported devices; otherwise open waShare.href
+   After sharing, clear input fields but keep greeting displayed (preview remains)
+*/
+waShare.addEventListener('click', async (e)=>{
+  e.preventDefault();
+  const nameTyped = (nameInput.value||'').trim();
+  const msgTyped = (msgInput.value||'').trim();
+  const nameToShare = nameTyped || current.name || DEFAULT_NAME;
+  const msgToShare = msgTyped || current.msg || DEFAULT_MSG;
+  const shareText = `${nameToShare} ki taraf se: ${msgToShare}\n${location.origin}${location.pathname}?name=${encodeURIComponent(nameToShare)}&msg=${encodeURIComponent(msgToShare)}`;
 
-/* ----------------- Falling flowers (reduced density) ----------------- */
+  if(navigator.share){
+    try{
+      await navigator.share({ title: 'Happy Navratri', text: shareText, url: '' });
+    }catch(err){}
+  } else {
+    // open WhatsApp link in new tab
+    const wa = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    window.open(wa, '_blank');
+  }
+
+  // After sharing: clear input fields but keep greeting preview as the shared text
+  nameInput.value = '';
+  msgInput.value = '';
+  // Keep greeting showing the shared values:
+  nameEl.textContent = nameToShare;
+  msgEl.textContent = msgToShare;
+  // rebuild waShare href for the new values
+  updateWaLinkWith(nameToShare, msgToShare);
+});
+
+/* ----------------- Simple visual effects (flowers/balloons/confetti) ----------------- */
+/* Flowers (emoji-like) - lower density */
 const FLOWERS = ["🌺","🌸","🌼","🌹","🌻"];
 function startFallingFlowers(){
   const base = Math.max(6, Math.floor(innerWidth/140));
   for(let i=0;i<Math.floor(base*0.25);i++) createFlower();
-  setInterval(()=>{ if(Math.random()>0.6) createFlower(); }, 950);
+  setInterval(()=>{ if(Math.random()>0.6) createFlower(); }, 1000);
 }
 function createFlower(){
   const el = document.createElement('div');
   el.style.position = 'absolute';
   el.style.zIndex = 12;
-  const startX = random(innerWidth*0.12, innerWidth*0.88);
+  const startX = Math.floor(Math.random()*(innerWidth*0.75))+innerWidth*0.125;
   el.style.left = startX + 'px';
-  el.style.top = (-30 + random(-60,0)) + 'px';
-  el.style.fontSize = random(16,30) + 'px';
+  el.style.top = (-30 + Math.random()*-60) + 'px';
+  el.style.fontSize = (Math.random()*14 + 16) + 'px';
   el.style.willChange = 'transform,opacity';
-  el.textContent = FLOWERS[Math.floor(random(0,FLOWERS.length))];
+  el.textContent = FLOWERS[Math.floor(Math.random()*FLOWERS.length)];
   flowersLayer.appendChild(el);
 
-  const duration = random(4200,9200);
-  const endY = innerHeight*0.62 + random(20, innerHeight*0.22);
+  const duration = Math.random()*5000 + 4200;
+  const endY = innerHeight*0.62 + Math.random()*(innerHeight*0.22);
   const start = performance.now();
-  const rot = random(-360,360);
+  const rot = Math.random()*720 - 360;
   function frame(t){
     const p = Math.min(1,(t-start)/duration);
-    const sway = Math.sin(p*Math.PI*2*random(0.6,1.4))*40;
+    const sway = Math.sin(p*Math.PI*2*(Math.random()*1.2+0.6))*40;
     const x = startX + sway;
-    const y = -40 + p*(endY + random(10,60));
-    el.style.transform = `translate(${x - startX}px, ${y}px) rotate(${rot*p}deg)`;
+    const y = -40 + p*(endY + Math.random()*60);
+    el.style.transform = `translate(${x-startX}px, ${y}px) rotate(${rot*p}deg)`;
     el.style.opacity = 1 - p*0.95;
     if(p < 1) requestAnimationFrame(frame);
     else el.remove();
@@ -456,43 +331,41 @@ function createFlower(){
   requestAnimationFrame(frame);
 }
 
-/* ----------------- Balloons (smaller sizes) ----------------- */
+/* Balloons - small and slow */
 function startBalloons(){
-  const bCount = Math.max(5, Math.floor(innerWidth / 200));
+  const bCount = Math.max(5, Math.floor(innerWidth/220));
   for(let i=0;i<bCount;i++) createBalloon();
-  setInterval(()=>{ if(Math.random()>0.5) createBalloon(); }, 2400);
+  setInterval(()=>{ if(Math.random()>0.5) createBalloon(); }, 2600);
 }
 function createBalloon(){
-  const size = Math.floor(random(20,60)); // smaller now
+  const size = Math.floor(Math.random()*40 + 20);
   const el = document.createElement('div');
   el.style.position='absolute'; el.style.zIndex='11';
-  const startX = random(20, innerWidth - 20);
+  const startX = Math.floor(Math.random()* (innerWidth - 40));
   el.style.left = startX + 'px';
   el.style.top = (-size - 10) + 'px';
   el.style.width = size + 'px';
   el.style.height = Math.round(size*1.18) + 'px';
-  el.style.borderRadius = '50%';
-  el.style.pointerEvents = 'none';
-  el.style.boxShadow = `0 8px 18px rgba(0,0,0,0.18)`;
-  el.style.display = 'flex'; el.style.alignItems = 'center'; el.style.justifyContent = 'center';
+  el.style.borderRadius='50%';
+  el.style.pointerEvents='none';
   el.style.background = `radial-gradient(circle, ${getRandomNeon()}, ${getRandomNeon(0.45)})`;
+  el.style.boxShadow = `0 8px 18px rgba(0,0,0,0.12)`;
   balloonsLayer.appendChild(el);
 
-  // simple string
-  const stick = document.createElement('div'); stick.style.position='absolute'; stick.style.left=(size/2-1)+'px'; stick.style.top=(Math.round(size*1.18))+'px'; stick.style.width='2px'; stick.style.height=Math.max(18,size*0.6)+'px'; stick.style.background='rgba(0,0,0,0.08)'; el.appendChild(stick);
+  const stick = document.createElement('div');
+  stick.style.position='absolute';
+  stick.style.left=(size/2-1)+'px'; stick.style.top=(Math.round(size*1.18))+'px';
+  stick.style.width='2px'; stick.style.height=Math.max(18,size*0.6)+'px'; stick.style.background='rgba(0,0,0,0.06)';
+  el.appendChild(stick);
 
-  const duration = random(7000,15000);
-  const driftX = random(-140,140);
+  const duration = Math.random()*8000 + 7000;
+  const driftX = Math.random()*240 - 120;
   const start = performance.now();
-  const flickerSpeed = random(500,1200);
   function frame(t){
     const p = Math.min(1,(t-start)/duration);
-    const x = startX + driftX * p + Math.sin(p*Math.PI*3)*10;
+    const x = startX + driftX*p + Math.sin(p*Math.PI*3)*10;
     const y = -size - 10 + p*(innerHeight + size + 80);
-    el.style.transform = `translate(${x - startX}px, ${y}px) rotate(${Math.sin(p*6)*10}deg)`;
-    // flicker
-    if(Math.floor(t/flickerSpeed)%2 === 0) el.style.opacity = 0.95;
-    else el.style.opacity = 0.6 + Math.random()*0.3;
+    el.style.transform = `translate(${x-startX}px, ${y}px) rotate(${Math.sin(p*6)*10}deg)`;
     if(p < 1) requestAnimationFrame(frame);
     else el.remove();
   }
@@ -500,24 +373,106 @@ function createBalloon(){
 }
 function getRandomNeon(opacity){
   const pool = ['#ff4da6','#ff2d68','#ffd166','#ff9aa2','#b3003b','#ffc857'];
-  const c = pool[Math.floor(random(0,pool.length))];
+  const c = pool[Math.floor(Math.random()*pool.length)];
   if(opacity){
-    const r = parseInt(c.substr(1,2),16);
-    const g = parseInt(c.substr(3,2),16);
-    const b = parseInt(c.substr(5,2),16);
+    const r = parseInt(c.substr(1,2),16), g = parseInt(c.substr(3,2),16), b = parseInt(c.substr(5,2),16);
     return `rgba(${r},${g},${b},${opacity})`;
   }
   return c;
 }
 
-/* ----------------- Share button: already built as waShare href -> open new tab on click if needed */
-waShare.addEventListener('click', (e)=>{
-  // Using href set earlier (updateShareLink) will open wa.me in new tab; let browser handle it.
-  // on desktop, user may see whatsapp web; on mobile, the app opens.
-});
+/* Simple confetti particles for bursts */
+let particles = [];
+class Particle {
+  constructor(x,y,vx,vy,size,color,life,rect=false){ Object.assign(this,{x,y,vx,vy,size,color,life,age:0,rect}); }
+  update(){ this.vy += 0.06; this.x += this.vx; this.y += this.vy; this.age += 1; }
+  draw(ctx){
+    ctx.save();
+    ctx.globalAlpha = Math.max(0,1 - this.age/this.life);
+    ctx.fillStyle = this.color;
+    if(this.rect) ctx.fillRect(this.x - this.size/2, this.y - this.size/2, this.size, this.size);
+    else { ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fill(); }
+    ctx.restore();
+  }
+}
+function spawnBurst(x,y,intensity){
+  const colors = [getCSS('--accent-maroon','#7a1226'), getCSS('--accent-gold','#d4a017'), '#ffd6e1', '#fff6d0'];
+  const sparks = Math.floor(10*intensity);
+  for(let i=0;i<sparks;i++){
+    const angle = Math.random()*Math.PI*2;
+    const speed = (Math.random()*4+1)*(0.7+intensity);
+    particles.push(new Particle(x,y,Math.cos(angle)*speed,Math.sin(angle)*speed,Math.random()*2+1,colors[Math.floor(Math.random()*colors.length)],Math.random()*60+40, Math.random()>0.5));
+  }
+}
+function getCSS(varName, fallback){ try{ const v = getComputedStyle(document.documentElement).getPropertyValue(varName).trim(); return v||fallback; }catch(e){return fallback;} }
 
-/* ----------------- Prevent accidental page jump: remove any href="#" usage (we used javascript:void for disabled gift) */
-/* ----------------- All good. ----------------- */
+(function confettiLoop(){
+  ctx.clearRect(0,0,cw,ch);
+  for(let i=particles.length-1;i>=0;i--){
+    const p = particles[i];
+    p.update();
+    p.draw(ctx);
+    if(p.age > p.life || p.y>ch+60) particles.splice(i,1);
+  }
+  requestAnimationFrame(confettiLoop);
+})();
+
+/* Optional: small timed bursts (also audio-reactive handled earlier in heavier code) */
+function startConfettiLoop(){ setInterval(()=>{
+  const x = Math.random()*innerWidth, y = innerHeight*0.3 + Math.random()*80;
+  spawnBurst(x,y, 0.9 + Math.random()*1.6);
+}, 2000); }
+
+/* helper: audio-reactive bursts (light) using Analyser */
+let audioCtx, analyser, srcNode, dataArray;
+function startAudioEffects(audioEl){
+  if(window._navAudioStarted) return; window._navAudioStarted = true;
+  try{
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 2048;
+    const bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+    srcNode = audioCtx.createMediaElementSource(audioEl);
+    srcNode.connect(analyser);
+    analyser.connect(audioCtx.destination);
+
+    let last = performance.now(), acc = 0;
+    (function loop(t){
+      const dt = Math.min(60,t-last)/16; last = t;
+      analyser.getByteFrequencyData(dataArray);
+      let low=0; const cutoff = Math.floor(dataArray.length*0.12);
+      for(let i=0;i<cutoff;i++) low += dataArray[i];
+      const avg = low/ (cutoff||1) / 255;
+      acc += avg;
+      if(acc > 1.6){
+        const rect = qs('#navGif')?.getBoundingClientRect();
+        const x = rect ? rect.left + rect.width*0.5 + (Math.random()-0.5)*rect.width*0.4 : Math.random()*cw;
+        const y = rect ? rect.top + Math.random()*rect.height*0.2 : Math.random()*ch*0.4;
+        spawnBurst(x,y, Math.min(3,1+avg*6));
+        acc = 0;
+      } else if(avg > 0.08 && Math.random() < 0.03 + avg*0.6){
+        const rect = qs('#navGif')?.getBoundingClientRect();
+        const x = rect ? rect.left + rect.width*0.5 + (Math.random()-0.5)*rect.width*0.4 : Math.random()*cw;
+        const y = rect ? rect.top + Math.random()*rect.height*0.2 : Math.random()*ch*0.4;
+        spawnBurst(x,y, Math.max(0.8, avg*2.4));
+      }
+      requestAnimationFrame(loop);
+    })(performance.now());
+  }catch(e){}
+}
+
+/* Accessibility: Enter reveals */
+document.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && landing && landing.style.display!=='none') revealBtn.click(); });
+
+/* Ensure mute UI initial */
+setMuteUI(false);
+
+/* Prevent scroll on touch */
+window.addEventListener('touchmove', e=>{ if(document.body) e.preventDefault(); }, {passive:false});
+
+/* --- Helper to play audio on user gesture from reveal: startAudioEffects called after audio play --- */
+revealBtn.addEventListener('click', ()=>{ startAudioEffects(audioEl); });
 
 </script>
 </body>
